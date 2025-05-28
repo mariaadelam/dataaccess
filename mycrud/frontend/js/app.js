@@ -54,6 +54,11 @@ $(document).ready(function ($) {
                 { "data": "email" },
                 { "data": "telefon" },
                 { "data": "cnp" },
+                { "data": "poza",
+                    render: function(data){
+                        return '<img src="../backend/dist/uploads/' + data+'" style="max-width:150px"/>';
+                    }
+                },
                 {
                     "data": "datanastere",
                     render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss.SSSSZ','YYYY-MM-DD' )
@@ -103,9 +108,14 @@ $(document).ready(function ($) {
                 $('#age').val(datan);
                 $('#phone').val(res.data.telefon);
                 $('#cnp').val(res.data.cnp);
-
-
-
+                //$('#poza').val(res.data.poza);
+                if(res.data.poza){
+                $('#myphoto').css('display', 'inline');
+                $('#myphoto').attr('src', '../backend/dist/uploads/' + res.data.poza);
+                }
+                else{
+                    $('#myphoto').css('display', 'none');
+                }
             }
         });
     });
@@ -134,8 +144,7 @@ $(document).ready(function ($) {
         var idValue = document.getElementById("id").value;
         var nume = document.getElementById("lname").value;
         var prenume = document.getElementById("fname").value;
-        // alert(idValue == '');
-        // console.log('am id', idValue);
+        
         let method = 'POST';
         let urlReq = "http://localhost:3002/users/"
         if (idValue != '') {
@@ -145,18 +154,17 @@ $(document).ready(function ($) {
         else {
             idValue
         }
-        // alert(method);
-        // alert(urlReq);
+        let form = $('#userInserUpdateForm');
+        
+        let formData = new FormData(form[0]);
         $.ajax({
 
             type: method,
             url: urlReq,
-            data: $(this).serialize(), // get all form field value in 
-            // data:{
-            //     nume:nume,
-            //     prenume:prenume,
-            //     id:idValue
-            // },
+            // data: $(this).serialize(), // get all form field value in 
+            data: formData,
+            contentType: false, 
+            processData: false,
             dataType: 'json',
             success: function (res) {
                 console.log('am primit', res);

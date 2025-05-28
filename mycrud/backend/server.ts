@@ -4,12 +4,14 @@ import * as bodyParser from "body-parser";
 import {userRouter} from "./routes/userRouter";
 import cors from 'cors';
 import path from 'path';
+import fileUpload from 'express-fileupload';
 dotenv.config();
 
 const app: Express = express();
 app.use(express.urlencoded({ extended: true }))
 const port = process.env.PORT;
 app.use(cors());
+app.use(fileUpload());
 // CORS
 // app.use((req, res, next) => {
 //   res.append('Access-Control-Allow-Origin', ['*']);

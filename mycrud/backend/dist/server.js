@@ -42,11 +42,13 @@ const bodyParser = __importStar(require("body-parser"));
 const userRouter_1 = require("./routes/userRouter");
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: true }));
 const port = process.env.PORT;
 app.use((0, cors_1.default)());
+app.use((0, express_fileupload_1.default)());
 // CORS
 // app.use((req, res, next) => {
 //   res.append('Access-Control-Allow-Origin', ['*']);
